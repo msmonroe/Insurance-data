@@ -1,0 +1,14 @@
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.AssemblyInfoInputs.cache
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.AssemblyInfo.cs
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.csproj.CoreCompileInputs.cache
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/bin/Debug/net8.0/InsuranceLeadGenerator
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/bin/Debug/net8.0/InsuranceLeadGenerator.deps.json
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/bin/Debug/net8.0/InsuranceLeadGenerator.runtimeconfig.json
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/bin/Debug/net8.0/InsuranceLeadGenerator.dll
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/bin/Debug/net8.0/InsuranceLeadGenerator.pdb
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.dll
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/refint/InsuranceLeadGenerator.dll
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.pdb
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/InsuranceLeadGenerator.genruntimeconfig.cache
+/home/runner/work/Insurance-data/Insurance-data/src/InsuranceLeadGenerator/obj/Debug/net8.0/ref/InsuranceLeadGenerator.dll
