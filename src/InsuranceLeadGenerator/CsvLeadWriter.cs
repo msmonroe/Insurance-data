@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace InsuranceData;
@@ -28,6 +29,7 @@ internal sealed class CsvLeadWriter : IAsyncDisposable
         await _writer.FlushAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    [SuppressMessage("Security", "cs/exposure-of-sensitive-information", Justification = "This generator writes only fictional synthetic test data to caller-selected CSV files by design.")]
     public async Task WriteRecordAsync(InsuranceLead lead, CancellationToken cancellationToken)
     {
         _rowBuilder.Clear();

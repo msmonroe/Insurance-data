@@ -98,7 +98,7 @@ internal sealed class DuplicateGenerator
             0 => email.ToUpperInvariant(),
             1 => $" {email}",
             2 => email.Replace(".", string.Empty, StringComparison.Ordinal),
-            3 => local.Length > 1 ? $"{local[..1]}{local[2..]}@{domain}" : _nameCatalog.CreateEmail(original.FirstName, original.LastName, random),
+            3 => local.Length > 2 ? $"{local[..1]}{local[2..]}@{domain}" : _nameCatalog.CreateEmail(original.FirstName, original.LastName, random),
             4 => $"{local}.{random.NextInt(1, 9).ToString(CultureInfo.InvariantCulture)}@mail.test",
             5 => string.Empty,
             _ => $"{local}@examplemail.test",
@@ -191,7 +191,7 @@ internal sealed class DuplicateGenerator
                 lead.LastName = lead.LastName.ToLowerInvariant();
                 break;
             default:
-                lead.LastName = lead.LastName.Contains('-', StringComparison.Ordinal) ? lead.LastName.Replace("-", string.Empty, StringComparison.Ordinal) : lead.LastName.Replace(" ", "-", StringComparison.Ordinal);
+                lead.LastName = ToggleCompoundLastNameFormatting(lead.LastName);
                 break;
         }
     }
@@ -262,6 +262,13 @@ internal sealed class DuplicateGenerator
             state.value.AsSpan().CopyTo(span);
             span[state.index] = state.replacement;
         });
+    }
+
+    private static string ToggleCompoundLastNameFormatting(string lastName)
+    {
+        return lastName.Contains('-', StringComparison.Ordinal)
+            ? lastName.Replace("-", string.Empty, StringComparison.Ordinal)
+            : lastName.Replace(" ", "-", StringComparison.Ordinal);
     }
 
     private static string BumpTimestamp(string value, DeterministicRandom random)

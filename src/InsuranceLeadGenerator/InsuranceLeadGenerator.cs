@@ -47,6 +47,7 @@ internal sealed class InsuranceLeadGenerator
         int duplicateSourceInsertIndex = 0;
         long nextLeadId = 0;
         long nextLogicalRecordNumber = 0;
+        long completedBytesWritten = 0;
         var stopwatch = Stopwatch.StartNew();
         bool cancelled = false;
 
@@ -110,12 +111,12 @@ internal sealed class InsuranceLeadGenerator
 
                     await writer.WriteRecordAsync(lead, cancellationToken).ConfigureAwait(false);
                     fileStatistics.RowCount++;
-                    statistics.Record(lead, statistics.ApproximateBytesWritten + writer.BytesWritten);
+                    statistics.Record(lead, completedBytesWritten + writer.BytesWritten);
                     _validationInspector.Track(lead);
 
                     if (_options.ProgressInterval > 0 && nextLeadId % _options.ProgressInterval == 0)
                     {
-                        ReportProgress(fileIndex + 1, writer.BytesWritten, nextLeadId, stopwatch.Elapsed);
+                        ReportProgress(fileIndex + 1, completedBytesWritten + writer.BytesWritten, nextLeadId, stopwatch.Elapsed);
                     }
                 }
 
@@ -130,6 +131,7 @@ internal sealed class InsuranceLeadGenerator
             await ValidationInspector.ValidateFileMetadataAsync(filePath, InsuranceLead.HeaderColumns, cancellationToken).ConfigureAwait(false);
             fileStatistics.Sha256Checksum = await ManifestWriter.ComputeSha256Async(filePath, cancellationToken).ConfigureAwait(false);
             statistics.Files.Add(fileStatistics);
+            completedBytesWritten += fileStatistics.FileSizeBytes;
 
             if (cancelled)
             {
@@ -307,18 +309,11 @@ internal sealed class InsuranceLeadGenerator
         return duplicateSources[random.NextInt(duplicateSources.Count)];
     }
 
-    private void ReportProgress(int currentFileNumber, long currentFileBytes, long totalRecordsWritten, TimeSpan elapsed)
+    private void ReportProgress(int currentFileNumber, long approximateBytes, long totalRecordsWritten, TimeSpan elapsed)
     {
         double rowsPerSecond = elapsed.TotalSeconds <= 0 ? 0d : totalRecordsWritten / elapsed.TotalSeconds;
-        long approximateBytes = statisticsCache(currentFileBytes);
         Console.WriteLine(
             $"[{DateTime.UtcNow:O}] File {currentFileNumber}/{_options.FileCount} | Records {totalRecordsWritten.ToString("N0", CultureInfo.InvariantCulture)} | Rows/sec {rowsPerSecond.ToString("N0", CultureInfo.InvariantCulture)} | Elapsed {elapsed:hh\\:mm\\:ss} | Approx Size {FormatBytes(approximateBytes)}");
-
-        long statisticsCache(long bytesForCurrentFile)
-        {
-            long completedFileBytes = 0;
-            return completedFileBytes + bytesForCurrentFile;
-        }
     }
 
     private string BuildAddress1(DeterministicRandom random)

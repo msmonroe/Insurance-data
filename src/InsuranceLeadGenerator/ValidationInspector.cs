@@ -188,5 +188,10 @@ internal sealed class ValidationInspector
 
     private long Count(DuplicateType type) => _counts.GetValueOrDefault(type);
 
-    private long CountModifiedDuplicates() => _counts.Where(static pair => pair.Key is not DuplicateType.UNIQUE and not DuplicateType.EXACT and not DuplicateType.INTENTIONALLY_INVALID).Sum(static pair => pair.Value);
+    private long CountModifiedDuplicates()
+    {
+        return _counts
+            .Where(static pair => pair.Key is not DuplicateType.UNIQUE and not DuplicateType.EXACT and not DuplicateType.INTENTIONALLY_INVALID)
+            .Sum(static pair => pair.Value);
+    }
 }
