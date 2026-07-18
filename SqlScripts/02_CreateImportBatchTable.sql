@@ -1,0 +1,13 @@
+CREATE TABLE dbo.ImportBatch
+(
+    ImportBatchId BIGINT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    BatchName NVARCHAR(200) NOT NULL,
+    SourceFileName NVARCHAR(260) NOT NULL,
+    ExpectedRowCount BIGINT NULL,
+    ImportedRowCount BIGINT NULL,
+    StartedUtc DATETIME2(0) NOT NULL CONSTRAINT DF_ImportBatch_StartedUtc DEFAULT SYSUTCDATETIME(),
+    CompletedUtc DATETIME2(0) NULL,
+    Status NVARCHAR(40) NOT NULL CONSTRAINT DF_ImportBatch_Status DEFAULT N'STARTED',
+    Notes NVARCHAR(4000) NULL
+);
+GO
